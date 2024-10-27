@@ -1,13 +1,11 @@
-import './App.css';
-import { HeaderComponent } from "./components/HeaderComponent/HeaderComponent";
-import { FormsComponent } from "./components/FormsComponent/FormsComponent";
+import { Login } from './pages/login/Login';
 
+import './App.css';
 
 function App() {
   return (
-    <div className='app'>
-      <HeaderComponent />
-      <FormsComponent />
+    <div className="app">
+      <Login />
     </div>
   );
 }
