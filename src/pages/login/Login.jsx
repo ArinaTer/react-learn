@@ -19,14 +19,18 @@ export const Login = () => {
               Submit
             </Button>
           </form>
-          <footer className={styles.formFooter}>
-            <header className={styles.formFooterHeader}>
-              <span>Or sign in with</span>
-            </header>
-            <div className={styles.formFooterSocials}>
-              <Icon href="/" target="_blank" name="facebook" />
-              <Icon href="/" target="_blank" name="instagram" />
-              <Icon href="/" target="_blank" name="linkedin"/>
+          <footer className={styles.formFooterSocials}>
+            <h5 className={styles.socialLinksLabel}>Or sign in with</h5>
+            <div className={styles.socialLinks}>
+              <a href="/" target="_blank">
+                <Icon name="facebook" />
+              </a>
+              <a href="/" target="_blank">
+                <Icon href="/" target="_blank" name="instagram" />
+              </a>
+              <a href="/" target="_blank">
+                <Icon href="/" target="_blank" name="linkedin" />
+              </a>
             </div>
           </footer>
         </section>

@@ -8,12 +8,8 @@ const icons = {
   linkedin: LinkedInIcon,
 };
 
-export const Icon = ({ name, ...props }) => {
+export const Icon = ({ name}) => {
   const IconComponent = icons[name];
 
-  return (
-    <a {...props}>
-      <IconComponent />
-    </a>
-  );
+  return <IconComponent />;
 };
