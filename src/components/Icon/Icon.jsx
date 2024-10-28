@@ -3,13 +3,17 @@ import { ReactComponent as InstagramIcon } from "../../assets/icons/instagran.sv
 import { ReactComponent as LinkedInIcon } from "../../assets/icons/linkidin.svg";
 
 const icons = {
-  'facebook': FacebookIcon,
-  'instagram': InstagramIcon,
-  'linkedin': LinkedInIcon,
-}
+  facebook: FacebookIcon,
+  instagram: InstagramIcon,
+  linkedin: LinkedInIcon,
+};
 
-export const Icon = ({ name }) => {
+export const Icon = ({ name, ...props }) => {
   const IconComponent = icons[name];
 
-  return <IconComponent />;
-}
+  return (
+    <a {...props}>
+      <IconComponent />
+    </a>
+  );
+};
