@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Icon } from "../../components/Icon/Icon";
 import { Input } from "../../components/Input/Input";
 import { Button } from "../../components/Button/Button";
@@ -5,16 +6,49 @@ import { Button } from "../../components/Button/Button";
 import styles from "./Login.module.css";
 
 export const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleForm = (e) => {
+    e.preventDefault();
+
+    if (email === "test@gmail.com" && password === "12345678") {
+      alert("Пароль введен верно");
+    } else {
+      alert("Неправильный логин или пароль");
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.layout}>
-        <section className={styles.loginSection}>
+        <section className={`${styles.section} ${styles.loginSection}`}>
           <header className={styles.formHeader}>
             <h3>Sign in</h3>
           </header>
-          <form className={styles.loginForm}>
-            <Input type="text" placeholder="Email" />
-            <Input type="password" placeholder="Password" />
+          <form className={styles.loginForm} onSubmit={handleForm}>
+            <Input
+              type="text"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <div className={styles.loginFormCheckbox}>
+              <Input
+                type="checkbox"
+                checked={showPassword}
+                onChange={() => setShowPassword(!showPassword)}
+              />
+              <label>Show password</label>
+
+            </div>
             <Button type="submit" className={styles.submitButton}>
               Submit
             </Button>
@@ -34,7 +68,7 @@ export const Login = () => {
             </div>
           </footer>
         </section>
-        <section className={styles.welcomeSection}>
+        <section className={`${styles.section} ${styles.welcomeSection}`}>
           <header className={styles.welcomeHeader}>
             <h4>Welcome back!</h4>
           </header>
