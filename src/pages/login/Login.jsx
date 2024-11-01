@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Icon } from "../../components/Icon/Icon";
 import { Input } from "../../components/Input/Input";
 import { Button } from "../../components/Button/Button";
@@ -6,13 +7,15 @@ import { Button } from "../../components/Button/Button";
 import styles from "./Login.module.css";
 
 export const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleForm = (e) => {
-    e.preventDefault();
-
+  const onSubmit = (data) => {
+    const { email, password } = data;
     if (email === "test@gmail.com" && password === "12345678") {
       alert("Пароль введен верно");
     } else {
@@ -27,19 +30,35 @@ export const Login = () => {
           <header className={styles.formHeader}>
             <h3>Sign in</h3>
           </header>
-          <form className={styles.loginForm} onSubmit={handleForm}>
+          <form className={styles.loginForm} onSubmit={handleSubmit(onSubmit)}>
             <Input
               type="text"
               placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              {...register("email", {
+                required: "Email Обязателен",
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "Некорректный email",
+                },
+              })}
             />
+            {errors.email && (
+              <p className={styles.error}>{errors.email.message}</p>
+            )}
             <Input
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              {...register("password", {
+                required: "Пароль обязателен",
+                minLength: {
+                  value: 8,
+                  message: "Пароль должен быть не менее 8 символов",
+                },
+              })}
             />
+            {errors.password && (
+              <p className={styles.error}>{errors.password.message}</p>
+            )}
             <div className={styles.loginFormCheckbox}>
               <Input
                 type="checkbox"
@@ -47,7 +66,6 @@ export const Login = () => {
                 onChange={() => setShowPassword(!showPassword)}
               />
               <label>Show password</label>
-
             </div>
             <Button type="submit" className={styles.submitButton}>
               Submit
