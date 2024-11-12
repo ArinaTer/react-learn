@@ -6,25 +6,49 @@ import { Button } from "../../components/Button/Button";
 
 import styles from "./Login.module.css";
 
-
 export const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    mode: "onChange"
+    mode: "onChange",
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (data) => {
-    const { email, password } = data;
-    if (email === "test@gmail.com" && password === "12345678") {
-      alert("Пароль введен верно");
-    } else {
-      alert("Неправильный логин или пароль");
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch("http://localhost:5001/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Ошибка при выполнении запроса");
+      }
+      const result = await response.json();
+      if (result.status === "success") {
+        alert("Логин успешен!");
+      } else {
+        alert(result.message || "Неправильный логин или пароль");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Произошла ошибка при отправке данных.");
     }
   };
+
+  // const onSubmit = (data) => {
+  //   const { email, password } = data;
+  //   if (email === "test@gmail.com" && password === "12345678") {
+  //     alert("Пароль введен верно");
+  //   } else {
+  //     alert("Неправильный логин или пароль");
+  //   }
+  // };
 
   return (
     <div className={styles.container}>
