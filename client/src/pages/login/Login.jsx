@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Icon } from "../../components/Icon/Icon";
 import { Input } from "../../components/Input/Input";
 import { Button } from "../../components/Button/Button";
-
+import { login } from "../../api/api";
+import { useAuth } from "../../components/AuthContext/AuthContext";
 import styles from "./Login.module.css";
 
 export const Login = () => {
+  const { login: authLogin } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const {
     register,
     handleSubmit,
@@ -18,37 +24,17 @@ export const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await fetch("http://localhost:5001/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error("Ошибка при выполнении запроса");
-      }
-      const result = await response.json();
-      if (result.status === "success") {
-        alert("Логин успешен!");
-      } else {
-        alert(result.message || "Неправильный логин или пароль");
+      const result = await login(data);
+      if (result.data.status === "success") {
+        localStorage.setItem("token", result.data.token);
+        authLogin(result.data.token);
+        navigate(from, { replace: true });
       }
     } catch (error) {
       console.error("Error:", error);
       alert("Произошла ошибка при отправке данных.");
     }
   };
-
-  // const onSubmit = (data) => {
-  //   const { email, password } = data;
-  //   if (email === "test@gmail.com" && password === "12345678") {
-  //     alert("Пароль введен верно");
-  //   } else {
-  //     alert("Неправильный логин или пароль");
-  //   }
-  // };
 
   return (
     <div className={styles.container}>

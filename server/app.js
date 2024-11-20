@@ -1,21 +1,26 @@
+require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser')
+
+const authRoutes = require('./routes/auth')
+const authMiddleware = require('./middleware/authMiddleware');;
+
 const app = express();
-const port = 5001;
 
-app.use(cors());
 app.use(express.json());
+app.use(cookieParser())
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}));
 
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  console.log(req.body);  // Добавьте это для отладки
-  if (email === "test@gmail.com" && password === "12345678") {
-    res.json({ status: 'success', message: 'Login successful' });
-  } else {
-    res.status(401).json({ status: 'error', message: 'Invalid email or password' });
-  }
+app.use('/api/auth', authRoutes);
+
+app.get('/api/protected', authMiddleware, (req, res) => {
+    res.json({ message: 'Это защищенный маршрут', user: req.user });
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+const PORT = 5001
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
