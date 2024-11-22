@@ -5,8 +5,8 @@ import { NotFound } from './pages/NotFound/NotFound'
 import { Login } from './pages/Login/Login'
 import { Layout } from "./components/Layout/Layout";
 import { Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './components/AuthContext/AuthContext';
-import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
+import { AuthProvider } from './context/AuthContext';
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import './App.css';
 
 function App() {
@@ -15,8 +15,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="about" element={<ProtectedRoute><About /></ProtectedRoute>} />
-          <Route path="contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+          <Route path="about" element={<PrivateRoute><About /></PrivateRoute>} />
+          <Route path="contact" element={<PrivateRoute><Contact /></PrivateRoute>} />
           <Route path="login" element={<Login />} />
           <Route path='*' element={<NotFound />} />
         </Route>

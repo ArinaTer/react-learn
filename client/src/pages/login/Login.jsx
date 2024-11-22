@@ -5,7 +5,7 @@ import { Icon } from "../../components/Icon/Icon";
 import { Input } from "../../components/Input/Input";
 import { Button } from "../../components/Button/Button";
 import { login } from "../../api/api";
-import { useAuth } from "../../components/AuthContext/AuthContext";
+import { useAuth } from '../../context/AuthContext';
 import styles from "./Login.module.css";
 
 export const Login = () => {

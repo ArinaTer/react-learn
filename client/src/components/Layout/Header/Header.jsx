@@ -2,7 +2,7 @@ import styles from "./Header.module.css";
 import logo from "../../../assets/images/logo.svg";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { Logo } from "../../Logo/Logo";
-import { useAuth } from "../../AuthContext/AuthContext";
+import { useAuth } from "../../../context/AuthContext";
 
 const setActive = ({ isActive }) =>
   isActive ? `${styles.item} ${styles.active}` : styles.item;
