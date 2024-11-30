@@ -1,0 +1,12 @@
+.button {
+  width: 100%;
+  background: linear-gradient(0deg, rgba(26, 78, 27, 1) 0%, rgba(128, 179, 125, 1) 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 20px;
+  color: #fff;
+
+  &.rounded {
+    border-radius: 30px;
+  }
+}
