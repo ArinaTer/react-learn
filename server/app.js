@@ -15,6 +15,7 @@ app.use(cors({
     credentials: true,
 }));
 
+
 app.use('/api/auth', authRoutes);
 
 app.get('/api/protected', authMiddleware, (req, res) => {
